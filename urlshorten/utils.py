@@ -38,19 +38,6 @@ def lcg(modulus: int= 2**48-69, a:int=49235258628958, c: int=253087341916107, se
 
 
 
-def gen_pseudorandom_int(m=2**48 - 69, a=49235258628958, c=253087341916107, seed=42):
-    """
-    Generate a pseudorandom integer using the LCG algorithm. This is literally copy/pasted from the Wikipedia page here:
-    https://en.wikipedia.org/wiki/Linear_congruential_generator
-    :param m: modulus
-    :param a: multiplier
-    :param c: increment
-    :param seed: random seed value
-    :return: iterator of unique (!) pseudorandom integers
-    """
-    it = lcg(m, a, c, seed)
-    while True:
-        yield next(it)
 
 
 def gen_str(it, length=8):
@@ -79,7 +66,7 @@ def rsg(length=8, seed=42):
     :param seed: int seed value, ideally the
     :return:
     """
-    it = gen_str(gen_pseudorandom_int(seed=seed), length=8)
+    it = gen_str(lcg(seed=seed), length=8)
     while True:
         yield next(it)
 
