@@ -16,19 +16,22 @@ def fetch_single_entity(**kwargs):
     """Return an ORM object from the database matching the given criteria."""
     # don't import the db model at the top of the file, it's a circular import
     from urlshorten.models import Url
+
     return Url.query.filter_by(**kwargs).first()
+
 
 @lru_cache(maxsize=2**8)
 def get_short_url(long_url):
     """Return the short URL for the given long URL. It is *strongly* recommended
-        to normalize the URL before passing it in, because URLs are always normalized
-        before they are stored.
+    to normalize the URL before passing it in, because URLs are always normalized
+    before they are stored.
 
-        In production, I might even create a lightweight, user-defined subclass of `str` called
-        NormalizedUrl to earmark URLs that have passed this step, and explicitly
-        canonicalize arguments that aren't instances of that class."""
+    In production, I might even create a lightweight, user-defined subclass of `str` called
+    NormalizedUrl to earmark URLs that have passed this step, and explicitly
+    canonicalize arguments that aren't instances of that class."""
     entity = fetch_single_entity(canonical=long_url)
     return entity.key if entity else None
+
 
 @lru_cache(maxsize=2**8)
 def get_long_url(short_url):

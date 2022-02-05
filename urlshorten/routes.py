@@ -22,7 +22,7 @@ app = init_app()
 @app.route("/")
 def index():
     """A convenient tabular view of all shortened urls/targets currently in the database.
-        TODO: Add pagination. This will quickly become a problem for large databases.
+    TODO: Add pagination. This will quickly become a problem for large databases.
     """
     index = Url.query.all()
     return render_template("index.html", urls=index)
@@ -93,12 +93,14 @@ def shorten_url():
         url = Url(long_url)
         db.session.add(url)
         db.session.commit()
-        return jsonify({
+        return jsonify(
+            {
                 "error": None,
                 "input": long_url,
                 "canonical": canonical_url,
                 "short_url": urlify(url.key),
-                    })
+            }
+        )
 
 
 @app.route("/<short_url>", methods=["GET"])
@@ -113,8 +115,11 @@ def get_target_and_redirect(short_url: str):
         print(e.__class__.__name__)
         return render_template("404.html")
     print(f"{target=}")
-    return redirect(target) if target else render_template("404.html", url=urlify(short_url))
-
+    return (
+        redirect(target)
+        if target
+        else render_template("404.html", url=urlify(short_url))
+    )
 
 
 if __name__ == "__main__":

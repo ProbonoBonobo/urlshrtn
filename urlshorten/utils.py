@@ -12,7 +12,12 @@ import warnings
 from typing import Generator
 
 
-def lcg(modulus: int= 2**48-69, a:int=49235258628958, c: int=253087341916107, seed: int=42) -> Generator[int, None, None]:
+def lcg(
+    modulus: int = 2**48 - 69,
+    a: int = 49235258628958,
+    c: int = 253087341916107,
+    seed: int = 42,
+) -> Generator[int, None, None]:
     """
     Generate a pseudorandom integer using the LCG algorithm. This is literally copy/pasted from Wikipedia [1] with parameter values
     chosen from this table [2] published by the American Mathematical Society. Specifically these values ensure a maximum decimal
@@ -37,9 +42,6 @@ def lcg(modulus: int= 2**48-69, a:int=49235258628958, c: int=253087341916107, se
         yield seed
 
 
-
-
-
 def gen_str(it, length=8):
     """
     Generate a random string of length characters
@@ -47,17 +49,19 @@ def gen_str(it, length=8):
     # define an alphabet of 64 characters with valid URL-safe characters. This is a pretty unique subset of printable ASCII
     html_safe = string.ascii_letters + string.digits
     # i don't love these extra punctuation characters, but they get us to 64 which is highly desirable
-    html_safe += '-_'
+    html_safe += "-_"
     transtable = {i: ch for i, ch in enumerate(html_safe)}
     while True:
         seed = next(it)
         # 6 relates to the upper bound of the decimal output range, which in this case is `2**6` or `64`
         binstr = bin(seed)[2:].zfill(length * 6)[: length * 6]
         yield seed, "".join(
-                # I vaguely remember reading that it's better to use the `str.translate` methods here because something
-                # something they interface directly with ctypes, but I don't remember how to use that
-            transtable[int(binstr[i : i + 6], 2)] for i in range(0, len(binstr), 6)
+            # I vaguely remember reading that it's better to use the `str.translate` methods here because something
+            # something they interface directly with ctypes, but I don't remember how to use that
+            transtable[int(binstr[i : i + 6], 2)]
+            for i in range(0, len(binstr), 6)
         )
+
 
 def rsg(length=8, seed=42):
     """
@@ -70,9 +74,11 @@ def rsg(length=8, seed=42):
     while True:
         yield next(it)
 
+
 def urlify(url_key: str) -> str:
     """
     Convert a URL key to a valid URL.
     """
     from routes import app
+
     return f"{app.config['SCHEME'].rstrip(':/')}://{app.config['HOSTNAME']}/{url_key}"

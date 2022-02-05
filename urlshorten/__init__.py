@@ -11,7 +11,12 @@ def init_app():
     directly, but here we go.
     :return:
     """
-    app = Flask(__name__, instance_relative_config=False, static_folder='static', template_folder='templates')
+    app = Flask(
+        __name__,
+        instance_relative_config=False,
+        static_folder="static",
+        template_folder="templates",
+    )
     app.config.from_pyfile("config.cfg")
     # db.drop_all()
     db.init_app(app)
