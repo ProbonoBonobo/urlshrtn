@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {#    tell crawlers not to index this page   #}
+    <meta name="robots" content="noindex">
+    <title>Error 404: Can't find that page</title>
+    <style>
+        h1 {
+            left: 0;
+            margin-top: -100px;
+            position: absolute;
+            text-align: center;
+            top: 38%;
+            width: 100%;
+            font-size: 6em;
+            color: tomato;
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+
+        body {
+            background: url("./static/lost-travolta.gif") no-repeat center center fixed;
+            background-size: 61%;
+        }
+    </style>
+</head>
+<body>
+<h1>Error 404: Can't find that page: {{ url }}</h1>
+</body>
+</html>

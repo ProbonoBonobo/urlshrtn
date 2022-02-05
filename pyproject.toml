@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "urlshorten"
+version = "0.1.0"
+description = "Simple URL shortener app"
+authors = ["Kevin Zeidler <kzeidler@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Flask = "^2.0.2"
+Flask-SQLAlchemy = "^2.5.1"
+psycopg2 = "^2.9.2"
+Flask-Script = "^2.0.6"
+cryptography = "^2.8"
+url-normalize = "^1.4.3"
+
+[tool.poetry.dev-dependencies]
+ptpython = "^3.0.20"
+black = "^22.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
